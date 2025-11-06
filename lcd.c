@@ -3,8 +3,8 @@
 #define P_LCD PORTC
 
 void LCD_pulso_E ( ) {
-	PORTD = PORTD | 0x10 ;// Ni v e l a l t o en l a t e rminal E
-	PORTD = PORTD & 0xEF ;// Ni v e l bajo en l a t e rminal E
+	PORTD = PORTD | 0x10 ;// Nivel alto en la terminal E
+	PORTD = PORTD & 0xEF ;// Nivel bajo en la terminal E
 }
 
 void LCD_write_4 ( uint8_t inst) {
@@ -15,9 +15,9 @@ void LCD_write_4 ( uint8_t inst) {
 void LCD_write_8 (uint8_t inst) {
 	uint8_t temp ;
 	temp = ( inst & 0xF0) >> 4;
-	LCD_write_4 (temp) ; // Primero e l n i b b l e a l t o
+	LCD_write_4 (temp) ; // Primero el nibble alto
 	temp = inst & 0x0F ;
-	LCD_write_4 ( temp ) ; // Despu磂 s e l n i b b l e bajo
+	LCD_write_4 ( temp ) ; // Despu茅s el nibble bajo
 	_delay_us ( 4 0 ) ;
 }
 
@@ -39,18 +39,18 @@ void LCD_write_data (uint8_t data_8) {
 
 void LCD_reset ( ) {
 	_delay_ms(15) ;
-	LCD_write_4 (0x03 ) ; // Configura la funci髇 del display
+	LCD_write_4 (0x03 ) ; // Configura la funci贸n del display
 	
 	_delay_ms(4.1) ;
-	LCD_write_4 (0x03 ) ; // Configura la funci髇 del display
+	LCD_write_4 (0x03 ) ; // Configura la funci贸n del display
 						  // La interfaz aun es de 8 b i t s
 	_delay_us(100) ;
-	LCD_write_4 (0x03) ; // Configura la funci髇 del display
+	LCD_write_4 (0x03) ; // Configura la funci贸n del display
 	_delay_us(40) ; // La interfaz aun es de 8 bits
-	LCD_write_4 (0x02 ) ; // Configura la funci髇 del display
+	LCD_write_4 (0x02 ) ; // Configura la funci贸n del display
 	_delay_us(40) ; // Define l a i n t e r f a z de 4 b i t s
-	LCD_write_8 (0x28 ) ; // Configura la funci髇 del Display
-						// Dos l韓eas y 5x7 puntos
+	LCD_write_8 (0x28 ) ; // Configura la funci贸n del Display
+						// Dos l铆neas y 5x7 puntos
 	LCD_write_8 (0x0C) ; // Encendido del Display
 	LCD clear ( ) ; // Limpieza del Display
 	LCD_write_8 (0x06) ; // Ajuste de entrada de datos
@@ -66,7 +66,7 @@ void LCD_cursor( uint8_t pos ) {
 		LCD_write_8 (col) ;
 	}
 	else {
-		col = col | 0xC0 ; // DB7 = 1 y direcci髇 = 0x40
+		col = col | 0xC0 ; // DB7 = 1 y direcci贸n = 0x40
 		LCD_write_8 (col) ;
 	}
 }		
@@ -79,4 +79,5 @@ void LCD_write_cad( char cad [ ] , uint8_t tam) {
 		if ( i==15)
 		LCD_cursor(0X10) ;
 	}
+
 }				
